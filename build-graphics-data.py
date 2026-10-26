@@ -18,9 +18,9 @@ CANDIDATES = [
     ('Aaron Flint', 'H6MT01152'),
     ('Sam Forstag', 'H6MT01137'),
     ('Troy Downing', 'H4MT02098'),
-    ('Brian J Miller', 'H6MT02150'),
+    ('Brian Miller', 'H6MT02150'),
     ('Patrick McKraken', None),  # No filing in the supplied candidate summaries.
-    ('Michael D Eisenhauer', 'H6MT02168'),
+    ('Michael Eisenhauer', 'H6MT02168'),
 ]
 BUBBLE_IDS = {'S6MT00295', 'S6MT00253', 'S6MT00287', 'H6MT01152', 'H6MT01137'}
 
@@ -82,9 +82,12 @@ def main():
         common = {'candidate': name, 'party': filing['CAND_PTY_AFFILIATION']}
         bar_rows.append({
             **common,
-            'pacMoney': money(filing['OTHER_POL_CMTE_CONTRIB']),
+            'pacMoney': money(Decimal(filing['OTHER_POL_CMTE_CONTRIB'])
+                              + Decimal(filing['TRANS_FROM_AUTH'])),
             'partyCommitteeMoney': money(filing['POL_PTY_CONTRIB']),
             'individualDonors': money(filing['TTL_INDIV_CONTRIB']),
+            'selfFund': money(Decimal(filing['CAND_CONTRIB'])
+                              + Decimal(filing['CAND_LOANS'])),
             'totalReceipts': money(filing['TTL_RECEIPTS']),
         })
         if candidate_id in BUBBLE_IDS:
@@ -101,7 +104,7 @@ def main():
               bubble_rows)
     write_csv('bar-chart.csv',
               ['candidate', 'party', 'pacMoney', 'partyCommitteeMoney',
-               'individualDonors', 'totalReceipts'], bar_rows)
+               'individualDonors', 'selfFund', 'totalReceipts'], bar_rows)
 
 
 if __name__ == '__main__':

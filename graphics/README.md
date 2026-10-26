@@ -6,10 +6,12 @@ formatted to two decimal places, and party codes are preserved from
 Candidate financial values come from
 `output-q3-bulk-data/candidate-summaries-q3/House Senate Montana 2026.csv`.
 Candidates are matched by FEC candidate ID. `TTL_RECEIPTS` is used for both
-`totalCandidateRaised` and `totalReceipts`; `OTHER_POL_CMTE_CONTRIB`,
-`POL_PTY_CONTRIB`, and `TTL_INDIV_CONTRIB` supply the three bar-chart categories.
-These categories do not exhaust total receipts; for example, candidate loans,
-candidate contributions, and transfers are separate source fields.
+`totalCandidateRaised` and `totalReceipts`. For the bar-chart categories,
+`pacMoney` sums `OTHER_POL_CMTE_CONTRIB` and `TRANS_FROM_AUTH`;
+`partyCommitteeMoney` uses `POL_PTY_CONTRIB`, and `individualDonors` uses
+`TTL_INDIV_CONTRIB`. `selfFund` sums `CAND_CONTRIB` and `CAND_LOANS`.
+These categories do not exhaust total receipts; other receipt types are
+separate source fields.
 
 PAC spending comes from
 `output-q3-bulk-data/montana-ies-by-candidate/Montana Super PAC IEs.csv`.
@@ -29,4 +31,4 @@ Patrick McKraken does not appear in any supplied candidate summary (including
 the national file). His row has blank party and financial fields, meaning
 missing data rather than zero. No party or financial values are inferred.
 Aaron Flint is used for the bubble-chart request's “Aaron Fling”; Sam Forstag
-matches SAMUEL KELLEY FORSTAG, and Brian J Miller matches BRIAN JAMES MILLER.
+matches SAMUEL KELLEY FORSTAG, and Brian Miller matches BRIAN JAMES MILLER.
